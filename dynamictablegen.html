@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <title>DynamictableGenetation</title>
+</head>
+
+<body>
+    <div class="container-fluid px-0">
+        <button class="btn btn-success float-right mt-5 mx-3 mb-3" onclick="gen()">Generate</button>
+        <table class="table table-dark table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Website</th>
+                    <th>Company</th>
+                </tr>
+            </thead>
+            <tbody id="t-body">
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+    <script>
+       
+       function gen() {
+            
+            var http = new XMLHttpRequest();
+            http.open('GET','https://jsonplaceholder.typicode.com/users');
+            http.open('GET','card.html');
+            http.send();
+            http.responseType = 'json';
+            http.onload = function(){
+                var student, tabledata = "";
+                student = http.response;
+            student.forEach(function (val, ind) {
+                tabledata += '<tr><td>'+'<a href=scard.html?'+ind+'>' + val.id + '</a></td><td>' + val.name + '</td><td>' + val.username + 
+                            '</td><td>' + val.email +'</td><td>' + val.address.street +'</td><td>' + val.phone + '</td><td>' + val.website +
+                            '</td><td>' + val.company.name + '</td></tr>';
+            })
+            var tbody = document.getElementById('t-body')
+            tbody.innerHTML = " ";
+            tbody.innerHTML = tabledata;
+            }
+        }
+    </script>
+</body>
+
+</html>
