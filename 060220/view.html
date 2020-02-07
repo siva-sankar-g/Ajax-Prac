@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <title>card</title>
+    <style>
+        div>a {
+            font-size: 1.8rem;
+            border-bottom: 2px solid grey;
+            padding-bottom: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid px-0">
+        <div class="container-fluid bg-secondary  py-3 d-flex justify-content-between align-items-center">
+            <img src="vbm.jpg" alt="logo" width="200px" height="80px">
+            <div>Logout</div>
+        </div>
+        <div id="cards" class="d-flex mx-0">
+            <div class=" bg-dark w-25 py-4 text-white text-center px-0" style="height: 796px;">
+                <a class="d-block text-decoration-none" href="table.html">Home</a>
+                <a class="d-block text-decoration-none" href="#">Services</a>
+                <a class="d-block text-decoration-none" href="#">About</a>
+            </div>
+            <div class="card w-50 mx-auto text-center mb-4">
+                <div class="card-header" id="cardheader1">1</div>
+                <div class="card-body" id="cardbody1">3</div>
+                <div class="card-footer" id="cardfooter1">5</div>
+            </div>
+        </div>
+    </div>
+        <script>
+           var string = location.search;
+           var arr = string.split('=');
+           var id = arr[arr.length-1];
+            var http = new XMLHttpRequest();
+            var bind = http.open('GET', 'https://jsonplaceholder.typicode.com/users/'+id)
+            http.send(bind)
+            http.responseType = 'json';
+            http.onload = function () {
+                var val = http.response;
+                var cards = document.getElementById('cards').children;
+                var cardchild = cards[1].children;
+                cardchild[0].innerHTML = '<h5>Name : ' + " " + val.name + '</h5>';
+                var addr = val.address;
+                cardchild[1].innerHTML = '<h2>Address</h2><div>Street :' + addr.street + '</div><div>Suite :' + addr.suite +
+                    '</div><div>City :' + addr.city + '</div><div>Zipcode :' + addr.zipcode + '</div>'
+                cardchild[2].innerHTML = '<span class="ml-4">Company :</span>' + val.company.name +
+                    '<span class="ml-4">Business :</span>' + val.company.bs +
+                    '<br/><span class="ml-4">Email :</span>' + val.email +
+                    '<span class="ml-4">Phone :</span>' + val.phone;
+    
+    
+            }
+    </script>       
+    
+</body>
+
+</html>
