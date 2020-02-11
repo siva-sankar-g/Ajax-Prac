@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <title>Table</title>
+    <style>
+        div>a {
+            font-size: 1.8rem;
+            border-bottom: 2px solid grey;
+            padding-bottom: 6px;
+        }
+        .outline-0{
+            outline : none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid px-0">
+        <div class="container-fluid bg-secondary  py-3 d-flex justify-content-between align-items-center">
+            <img src="vbm.jpg" alt="logo" width="200px" height="80px">
+            <div class="text-white mr-3">Logout</div>
+        </div>
+        <div class="pagebody container-fluid px-0 d-flex h-100">
+            <div class="container-fluid bg-dark w-25 py-4 text-center px-0 ">
+                <a class="d-block text-white text-decoration-none" href="table.html">Users</a>
+                <a class="d-block text-white text-decoration-none" href="cardpost.html">Posts</a>
+                <a class="d-block text-white text-decoration-none" href="cardcomment.html">Comments</a>
+            </div>
+            <div class="container-fluid">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Website</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="t-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        var http = new XMLHttpRequest();
+        http.open('GET', 'https://jsonplaceholder.typicode.com/users');
+        http.send();
+        http.responseType = 'json';
+        http.onload = function () {
+            var student, tabledata = "";
+            student = http.response;
+            student.forEach(function (val, ind) {
+                tabledata += `<tr id ="${val.id}">
+                    <td><input type="text" id='userid${val.id}' class="border-0 rounded-pill p-1 outline-0" readonly value ='${val.id}' style="width:50px;"/></td>
+                    <td><input type="text" id='name${val.id}' class="border-0 outline-0 rounded-pill p-1" readonly value ="${val.name}"/></td>
+                    <td><input type="text" id='email${val.id}' class="border-0 outline-0 rounded-pill p-1" readonly value ="${val.email}"/></td>
+                    <td><input type="text" id='address${val.id}' class="border-0 outline-0 rounded-pill p-1" readonly value ="${val.address.street}"/></td>
+                    <td><input type="text" id='phone${val.id}'class="border-0 outline-0 rounded-pill p-1" readonly value ="${val.phone}"/></td>
+                    <td><input type="text" id='website${val.id}' class="border-0 outline-0 rounded-pill p-1" readonly value ="${val.website}"/></td>
+                    <td><button id='edit${val.id}' class="btn btn-primary" onclick="editrow(${val.id})">Edit</button><button class="btn btn-success d-none" id='save${val.id}' onclick="saverow(${val.id})">Save</button></td>
+                    </tr>`    
+            })
+            var tbody = document.getElementById('t-body')
+            tbody.innerHTML = " ";
+            tbody.innerHTML = tabledata;
+        }
+        function editrow(id){
+           var row = document.getElementById(id);
+           var tds = row.getElementsByTagName('td');
+           console.log(tds[0].children[0].classList)
+           
+           for(let i = 0; i < tds.length-1; i++){
+               tds[i].children[0].classList.remove('border-0');
+               tds[i].children[0].removeAttribute('readonly');
+           }
+           document.getElementById(('save'+id)).classList.remove('d-none')
+           document.getElementById(('edit'+id)).classList.add('d-none')
+        }
+        function saverow(id){
+            var userid,name,email,address,phone,website,send,http;
+            var row = document.getElementById(id);
+           var tds = row.getElementsByTagName('td');
+           //console.log(tds[0].children[0].classList)
+           
+           for(let i = 0; i < tds.length; i++){
+               tds[i].children[0].classList.add('border-0','outline-0');
+               tds[i].children[0].setAttribute('readonly',true);
+           }
+           document.getElementById(('save'+id)).classList.add('d-none');
+           document.getElementById(('edit'+id)).classList.remove('d-none');
+          // for(let i = 0; i < tds.)
+          userid = document.getElementById(('userid'+id)).value;
+          name = document.getElementById(('userid'+id)).value;
+          email = document.getElementById(('userid'+id)).value;
+          address = document.getElementById(('userid'+id)).value;
+          phone = document.getElementById(('userid'+id)).value;
+          website = document.getElementById(('userid'+id)).value;
+
+          send = {
+              id : userid,
+              name : name,
+              email : email,
+              address : address,
+              phone : phone,
+              website:website
+          }
+
+          http = new XMLHttpRequest();
+          http.open('POST', 'https://jsonplaceholder.typicode.com/users/')
+          http.responseType = 'json';
+          http.onload = function(){
+              var x = http.response;
+              console.log(x)
+          }
+          http.send(send)
+        }
+
+        // function delete1(id) {
+        //     var http = new XMLHttpRequest();
+        //     http.open('DELETE', 'https://jsonplaceholder.typicode.com/users/' + id);
+        //     http.send();
+        //     http.responseType = 'json';
+        //     http.onload = function () {
+        //         console.log(http.response);
+        //     }
+        // }
+    </script>
+</body>
+
+</html>

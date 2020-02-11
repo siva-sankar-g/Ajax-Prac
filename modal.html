@@ -8,6 +8,27 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <title>modal</title>
 </head>
+<style>
+    div.modalclass{
+        position:fixed;
+        top:0px;
+        left:0px;
+        width:100%;
+        height: 100%;
+        background-color: rgb(19, 204, 26,0.4) ;
+        padding: 20px 0px;
+        /* opacity: 0.4; */
+       
+    }
+div#modal{
+    position:absolute;
+    top:-295px;
+    width:40%;
+    /* height: 100%; */
+    display: block;
+   margin: 0  auto;
+}
+</style>
 
 <body>
     <div class="container-fluid">
@@ -20,12 +41,23 @@
                     <th>
 
                         <!-- Button trigger modal -->
-                        <span type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#exampleModalLong">
-                            Launch demo modal
-                        </span>
+                        <button type="button" class="btn btn-primary" id="savebutton" onclick="show()">
+                            Save
+                        </button>
+                        <div class="modalclass d-none" id='modal-header'>
+                            <div class="card" id="modal">
+                                <div class="card-header">
+                                    <h2>Card Header</h2>
+                                </div>
+                                <div class="card-body">Enterdetails</div>
+                                <div class="card-footer">
+                                    <button class="btn btn-success">Save</button>
+                                    <button class="btn btn-warning">Cancle</button>
+                                </div>
+                            </div>
+                        </div>
 
-                        <!-- Modal -->
+                        <!-- Modal
                         <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -46,7 +78,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </th>
                     <th><button class="btn btn-success">Cancle</button></th>
                 </tr>
@@ -62,6 +94,23 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+        <script>
+        function show(){
+            document.getElementById('modal-header').classList.remove('d-none')
+            var ele = document.getElementById('modal');
+            pos = -295;
+           var id = setInterval(frame,4);
+            function frame(){ 
+                if (pos == 20){
+                    clearInterval(id)
+                }
+                else{
+                    ele.style.top = pos + "px";
+                    ++(pos);
+                }
+            }
+        }
+        </script>
 </body>
 
 </html>
